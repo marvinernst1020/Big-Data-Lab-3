@@ -1,10 +1,11 @@
-# 🚀 Lab 3: Spark-Based Data Lake & Analysis Pipelines
+# Lab 3: Spark-Based Data Lake & Analysis Pipelines
 
-**Course**: 23D020 – Big Data Management for Data Science  
-**Project**: Lab 3 – Data Management & Analysis Backbones  
+**Course**: 23D020 - Big Data Management for Data Science  
+**Project**: Lab 3 - Data Management & Analysis Backbones  
 **Team Members**:  
 - Marvin Ernst  
-- [Add your teammates' names here]
+- Oriol Gelabert
+- Alex Malo
 
 ---
 
