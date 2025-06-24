@@ -15,7 +15,7 @@ with DAG(
     dag_id='lab3_pipeline_orchestration',
     default_args=default_args,
     description='Run Lab 3 Data Pipelines Sequentially',
-    schedule_interval=None,  # manual trigger
+    schedule_interval=None,  # a manual trigger
     start_date=datetime(2025, 6, 24),
     catchup=False,
     tags=['lab3'],
@@ -36,4 +36,4 @@ with DAG(
         bash_command='python /opt/airflow/notebooks/scripts/03_analysis_pipeline.py',
     )
 
-    formatting >> exploitation >> analysis  # Task dependencies
+    formatting >> exploitation >> analysis  # these are the task dependencies
