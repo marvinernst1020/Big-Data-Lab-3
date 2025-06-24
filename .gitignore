@@ -1,0 +1,39 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+.env/
+.envrc/
+
+# Poetry
+poetry.lock
+
+# Spark local metadata
+.metastore_db/
+.derby.log
+
+# Jupyter
+.ipynb_checkpoints/
+.jupyter/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Project data folders
+datasets/
+formatted_zone/
+exploitation_zone/
+*.csv
+*.json
+*.parquet
+*.delta
+
+# Ignore original zip files
+OriginalData/
+*.zip

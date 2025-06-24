@@ -1,81 +1,112 @@
-# Lab 3: Spark-Based Data Lake & Analysis Pipelines
+# Lab 3: Spark-Based Data Lake and Analysis Pipelines
 
 **Course**: 23D020 - Big Data Management for Data Science  
-**Project**: Lab 3 - Data Management & Analysis Backbones  
-**Team Members**:  
-- Marvin Ernst  
+**Project**: Lab 3 - Data Management and Analysis Backbones  
+**Team Members**:
+
+- Marvin Ernst
 - Oriol Gelabert
 - Alex Malo
+
+Team: **L3-T04**
 
 ---
 
 ## Project Structure
 
-This repository contains the full implementation of our Lab 3 project. We implemented both the **Data Management Backbone** and **Data Analysis Backbone** using Apache Spark.
+This repository contains the full implementation of our Lab 3 project. We implemented both the **Data Management Backbone** and **Data Analysis Backbone** using Apache Spark and Jupyter notebooks.
+
+```
+Big-Data-Lab-3/
+├── landing_zone/
+├── formatted_zone/
+├── exploitation_zone/
+├── notebooks/
+│   ├── scripts/
+│   │   ├── 01_data_formatting_pipeline.py
+│   │   ├── 02_exploitation_pipeline.py
+│   │   └── 03_analysis_pipeline.py
+│   ├── 01_data_formatting_pipeline.ipynb
+│   ├── 02_exploitation_pipeline.ipynb
+│   └── 03_analysis_pipeline.ipynb
+├── airflow/
+│   └── lab3_dag.py
+├── OriginalData/
+├── Data_Manual_unzipped/
+├── pyproject.toml
+├── poetry.lock
+└── README.md
+```
+
+Note that `OriginalData` are the zipped original sources (ignored in Git) and `Data_Manual_unzipped`are the manually extracted files (not used directly).
 
 - we save our outputs in Jupyter notebooks
-- we have seperate folder for landing and formatiing zone
+- we have separate folders for landing, formatting, and exploitation zones
+- all pipeline steps are reproducible via standalone `.py` scripts and can be orchestrated
 
 ---
 
 ## Summary
 
 ### Objectives
-- Implement a data lake with three structured zones (Landing, Formatted, Exploitation)
-- Perform either **Descriptive** or **Predictive** analysis using Spark
-- Follow best practices in data validation, model training, and reproducibility
+
+- Set up a data lake with three structured zones: **Landing**, **Formatted**, and **Exploitation**
+- Perform descriptive analysis using Spark, computing key aggregations and indicators
+- Implement data quality and reproducibility practices across the Spark pipeline
+- BONUS: Use Apache Airflow to orchestrate all three pipeline steps
 
 ---
 
 ## Pipelines Overview
 
-### 1. Data Formatting (`01_data_formatting.py`)
-- Load 3 raw datasets (at least one JSON) from the Landing Zone
-- Clean and standardize schemas
-- Write partitioned data to the Formatted Zone in Parquet or Delta format
+### 1. Data Formatting (`01_data_formatting_pipeline.py`)
+
+- Unzips raw `.csv.zip` files from the Landing Zone
+- Loads three heterogeneous datasets:
+  - Tourist housing data (`*.csv`)
+  - Commercial premises (`*.csv`)
+  - Household size data (`*.json`)
+- Cleans, normalizes, and writes to the Formatted Zone in Parquet format
 
 ### 2. Exploitation Pipeline (`02_exploitation_pipeline.py`)
-- Load data from Formatted Zone
-- Join/enrich data, engineer features, clean for analysis
-- Store results in CSV, Parquet, or Delta format in Exploitation Zone
+
+- Aggregates and enriches data from the Formatted Zone
+- Calculates indicators by district, neighborhood, and census section
+- Stores KPI-ready tables into the Exploitation Zone
 
 ### 3. Analysis Pipeline (`03_analysis_pipeline.py`)
-- (Option A) Perform EDA and visualize with Seaborn/Matplotlib
-- (Option B) Train & evaluate ML models with Spark MLlib
-- Track models using MLflow and select best one for deployment
+
+- Performs descriptive analysis (EDA) using aggregated data
+- Visualizes household sizes, coworking/nightlife shares, and tourist density
+- Provides comparative dashboards with summary tables and time trends
 
 ---
 
 ## Selected Datasets
 
-- [Dataset 1] (e.g., `income_data.json`)
-- [Dataset 2] (e.g., `idealista_data.csv`)
-- [Dataset 3] (e.g., `unemployment_data.csv`)
+We work with the following three datasets, all located in the `landing_zone/`:
 
-At least one dataset is in JSON format, as required. See `assumptions.pdf` for full details.
+- **Tourist Housing**: quarterly `.csv` files containing apartment registry data
+- **Commercial Premises**: yearly `.csv` files about ground-floor businesses
+- **Household Size**: `.json` data on the number of people per dwelling unit
 
----
-
-## ⚙Technologies Used
-
-- Apache Spark (PySpark)
-- Pandas / Seaborn / Matplotlib (for EDA)
-- Spark MLlib (for ML tasks)
-- MLflow (for model tracking)
-- Optional: Apache Airflow (orchestration)
+At least one dataset is in JSON format, satisfying the project requirement.
 
 ---
 
-## How to Run
+## Technologies Used
 
-1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run the notebooks/scripts in order:
-   ```bash
-   python notebooks/01_data_formatting.py
-   python notebooks/02_exploitation_pipeline.py
-   python notebooks/03_analysis_pipeline.py
-   ```
+- **Apache Spark** (via PySpark)
+- **Jupyter** for development and EDA
+- **Seaborn** / **Matplotlib** for visualizations
+- **Poetry** for dependency management
+- **Pandas** (for dashboarding)
+- **Apache Airflow** for orchestration of the pipelines
 
+---
 
+## Orchestration (Bonus Task C)
 
+We implemented a simple Apache Airflow DAG (`lab3_dag.py`) that sequentially runs the three pipelines using `PythonOperator`. The DAG uses the script files in `notebooks/scripts/` and resolves all paths dynamically.
+
+This satisfies the bonus requirement of using orchestration for reproducible execution. We do not include Airflow logs or screenshots, but the DAG is fully deployable.

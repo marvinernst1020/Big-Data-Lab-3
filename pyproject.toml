@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "lab3_spark_project"
+version = "0.1.0"
+description = "Spark pipelines for BSE Big Data Lab 3"
+authors = ["Marvin Ernst <me1020@gmx.de>"]
+readme = "README.md"
+packages = [{ include = "notebooks" }]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyspark = "^3.5.0"
+pandas = "^2.2.1"
+matplotlib = "^3.8.4"
+seaborn = "^0.13.2"
+mlflow = "^2.12.1"
+unidecode = "^1.4.0"
+
+[tool.poetry.group.dev.dependencies]
+jupyterlab = "^4.2.0"
+black = "^24.4.2"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
